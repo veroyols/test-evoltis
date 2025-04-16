@@ -10,6 +10,7 @@ namespace Application.Mapper
         {
             CreateMap<Contact, ContactDto>();
             CreateMap<ContactDto, Contact>();
+            CreateMap<ContactBody, Contact>();
         }
     }
 }

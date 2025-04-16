@@ -12,6 +12,17 @@ namespace Application.UseCase
             _command = command;
             _query = query;
         }
+        public async Task<int> InsertContact(ContactBody body)
+        {
+            int result = await _command.InsertContact(body);
+            return result;
+        }
+
+        public async Task<List<ContactDto>> GetAllContacts()
+        {
+            var result = await _query.GetAllContacts();
+            return result;
+        }
         public async Task<ContactDto> GetContactById(int id)
         {
             var dto = await _query.GetContactById(id);
@@ -22,17 +33,10 @@ namespace Application.UseCase
             return dto;
         }
 
-
-        public async Task<int> InsertContact(ContactDto body)
+        public async Task<int> DeleteContactById(int id)
         {
-            int result = await _command.InsertContact(body);
-            return result;
-        }
-
-        public async Task<List<ContactDto>> GetAllContacts()
-        {
-            var result = await _query.GetAllContacts();
-            return result;
+            var dto = await _command.DeleteContactById(id);
+            return dto;
         }
     }
 }

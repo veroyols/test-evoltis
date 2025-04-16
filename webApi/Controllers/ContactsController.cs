@@ -23,7 +23,7 @@ namespace webApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> createContact([FromBody] ContactDto body)
+        public async Task<IActionResult> createContact([FromBody] ContactBody body)
         {
             try 
             {
@@ -44,6 +44,16 @@ namespace webApi.Controllers
             var result = await _serviceContact.GetContactById(id);
 
             if (result == null)
+                return NotFound($"No se encontró el contacto de ID = {id}");
+
+            return Ok(result);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteContactById(int id)
+        {
+            var result = await _serviceContact.DeleteContactById(id);
+
+            if (result == 0)
                 return NotFound($"No se encontró el contacto de ID = {id}");
 
             return Ok(result);
