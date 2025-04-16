@@ -1,5 +1,7 @@
-using Application.Interface;
-using Application.UseCase.GetAll;
+using Application.Interfaces;
+using Application.Mapper;
+using Application.UseCase;
+using Infrastructure.Database;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,8 +18,13 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration["ConnectionStrings"];
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+//mapper
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
 //dependencias 
 builder.Services.AddTransient<IServiceContact, ServiceContact>();
+builder.Services.AddTransient<ICommandContact, CommandContact>();
+builder.Services.AddTransient<IQueryContact, QueryContact>();
 
 var app = builder.Build();
 
