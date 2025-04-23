@@ -1,5 +1,6 @@
 ﻿using Application.DTO;
 using Application.Interfaces;
+using Domain.Entities;
 
 namespace Application.UseCase
 {
@@ -37,6 +38,12 @@ namespace Application.UseCase
         {
             var dto = await _command.DeleteContactById(id);
             return dto;
+        }
+
+        public async Task<int> UpdateContact(int id, ContactDto body)
+        {
+            var result = await _command.UpdateContact(id, body);
+            return result;
         }
     }
 }

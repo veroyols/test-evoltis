@@ -35,5 +35,18 @@ namespace Infrastructure.Database
             return id;
         }
 
+        public async Task<int> UpdateContact(int id, ContactDto body)
+        {
+            var existing = await _appDbContext.Contact.FindAsync(id);
+
+            if (existing == null)
+                return 0;
+
+            existing.Name = body.Name;
+            existing.Phone = body.Phone;
+
+            return await _appDbContext.SaveChangesAsync();
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Application.DTO;
 using Application.Interfaces;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace webApi.Controllers
@@ -55,6 +56,23 @@ namespace webApi.Controllers
 
             if (result == 0)
                 return NotFound($"No se encontró el contacto de ID = {id}");
+
+            return Ok(result);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateContactById(int id, [FromBody] ContactDto body)
+        {
+            if (id != body.Id)
+            {
+                return BadRequest("No se encontro contacto con ese id.");
+            }
+
+            var result = await _serviceContact.UpdateContact(id, body);
+
+            if (result == null) // o result == 0, según tu implementación
+            {
+                return NotFound($"No se encontró el contacto de ID = {id}");
+            }
 
             return Ok(result);
         }

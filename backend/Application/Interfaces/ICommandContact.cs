@@ -1,6 +1,7 @@
 ﻿
 
 using Application.DTO;
+using Domain.Entities;
 
 namespace Application.Interfaces
 {
@@ -8,6 +9,7 @@ namespace Application.Interfaces
     {
         public Task<int> InsertContact(ContactBody body);
         public Task<int> DeleteContactById(int id);
+        public Task<int> UpdateContact(int id, ContactDto body);
 
     }
 }
