@@ -1,28 +1,68 @@
-<div>
-    <h2>Agregar Contacto</h2>
-    <form [formGroup]="contactForm" (ngSubmit)="addContact()">
-      <div class="p-field">
-        <label for="name">Nombre</label>
-        <input id="name" type="text" pInputText formControlName="name" />
-      </div>
+<div class="p-4">
+    <div class="flex justify-between items-center mb-3">
+        <h2 class="m-0">Agenda 2025</h2>
+        <p-button label="Nuevo Contacto" (click)="openModal()" class="ml-auto"></p-button>
+    </div>
+    <input
+        type="text"
+        pInputText
+        [(ngModel)]="filterName"
+        (ngModelChange)="filterContacts()"
+        placeholder="Filtrar por nombre"
+    />
   
-      <div class="p-field">
-        <label for="phone">Teléfono</label>
-        <input id="phone" type="text" pInputText formControlName="phone" />
-      </div>
-  
-      <button pButton type="submit" label="Agregar">ADD</button>
-    </form>
-  </div>
-  
-  <hr>
-  
-  <div>
-    <h2>API DATA</h2>
-    <ul>
-      <li *ngFor="let item of data">
-        id = {{item.id}}, name = {{item.name}}, phone = {{ item.phone }}
-      </li>
-    </ul>
-  </div>
+    <p-card class="mx-auto w-full md:w-10 lg:w-8" >
+        <p-table [value]="dataFiltered" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.phone }}</td>
+                    <td class="flex justify-end">
+                        <button pButton label="Editar" class="p-button-rounded p-button-info mr-2" (click)="editarContacto(item)"></button>
+                        <button pButton label="Eliminar" class="p-button-rounded p-button-danger" (click)="eliminarContacto(item.id)"></button>
+                    </td>
+                    
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-card>
+
+    <p-dialog 
+      header="{{ edit ? 'Editar Contacto' : 'Nuevo Contacto' }}" 
+      [(visible)]="modal" 
+      [modal]="true" 
+      [style]="{width: '400px'}"
+      [closable]="false"
+    >
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="p-fluid">
+            <div class="mb-3">
+                <label for="name">Nombre</label>
+                <input id="name" type="text" pInputText formControlName="name" class="w-full" />
+                <p *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched" 
+                    [ngStyle]="{'color': 'red'}">Ingrese un nombre válido</p>
+            </div>
+    
+            <div class="mb-3">
+                <label for="phone">Teléfono</label>
+                <input id="phone" type="text" pInputText formControlName="phone" class="w-full" />
+                <p *ngIf="contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched" 
+                    [ngStyle]="{'color': 'red'}">Ingrese un teléfono válido</p>
+            </div>
+    
+            <div class="flex gap-3 justify-content-end">
+                <button pButton type="submit" class="p-button-success" [label]="edit ? 'Guardar' : 'Agregar'"></button>
+                <button pButton type="button" class="p-button-secondary" label="Cancelar" (click)="cancelar()"></button>
+            </div>
+        </form>
+    </p-dialog>
+</div>
   

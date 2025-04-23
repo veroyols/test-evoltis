@@ -7,6 +7,16 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { DividerModule } from 'primeng/divider';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -14,10 +24,19 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeComponent
   ],
   imports: [
-    ReactiveFormsModule,
     BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    ButtonModule,
     AppRoutingModule,
-    HttpClientModule ,
+    ButtonModule,
+    CardModule,
+    InputTextModule,
+    DividerModule,
+    TableModule,
+    DialogModule,
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
